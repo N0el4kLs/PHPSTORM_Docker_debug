@@ -1,0 +1,38 @@
+version: '3.2'
+services:
+  web:
+      # image: phpstorm/php-71-apache-xdebug-26
+      image: phpstorm/php-56-apache-xdebug-25
+      environment:
+        - XDEBUG_CONFIG="remote_handler=dbgp remote_host=host.docker.internal idekey=PHPSTORM"
+      ports:
+        - "8123:80"
+      volumes:
+        - ./src:/var/www/html
+      depends_on:
+        - db
+      networks:
+        phpdebug:
+          ipv4_address: 192.138.10.4
+  db:
+    build: ./db
+    platform: linux/x86_64
+    ports:
+      - "33306:3306"
+    networks:
+        phpdebug:
+          ipv4_address: 192.138.10.5
+    # environment:
+    #   - MYSQL_ROOT_PASSWORD="root"
+    #   - MYSQL_DATABASE="demo"
+      # - MYSQL_USER: root
+      # - MYSQL_PASSWORD: test
+    # volumes:
+    #   - ./mysql:/var/lib/mysql
+
+networks:
+  phpdebug:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.138.10.0/24
