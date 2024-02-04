@@ -1,6 +1,9 @@
 version: '3.2'
 services:
   web:
+  # https://github.com/JetBrains/phpstorm-docker-images
+      # image: phpstorm/php-80-apache-xdebug-30
+      # image: phpstorm/php-74-apache-xdebug-29
       # image: phpstorm/php-71-apache-xdebug-26
       image: phpstorm/php-56-apache-xdebug-25
       environment:
@@ -22,13 +25,9 @@ services:
     networks:
         phpdebug:
           ipv4_address: 192.138.10.5
-    # environment:
-    #   - MYSQL_ROOT_PASSWORD="root"
-    #   - MYSQL_DATABASE="demo"
-      # - MYSQL_USER: root
-      # - MYSQL_PASSWORD: test
-    # volumes:
-    #   - ./mysql:/var/lib/mysql
+    environment:
+        MYSQL_ROOT_PASSWORD: root
+        MYSQL_DATABASE: demo
 
 networks:
   phpdebug:
