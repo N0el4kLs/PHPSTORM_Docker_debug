@@ -1,0 +1,14 @@
+# https://github.com/JetBrains/phpstorm-docker-images
+# image: phpstorm/php-80-apache-xdebug-30
+# image: phpstorm/php-74-apache-xdebug-29
+# image: phpstorm/php-71-apache-xdebug-26
+# image: phpstorm/php-56-apache-xdebug-25
+FROM phpstorm/php-71-apache-xdebug-26
+
+ENV APACHE_DOCUMENT_ROOT /var/www/html/public
+
+RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf && \
+    sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf && \
+    sed -i 's/AllowOverride None/AllowOverride All/g' /etc/apache2/apache2.conf && \
+    a2enmod rewrite && \
+    docker-php-ext-install pdo pdo_mysql

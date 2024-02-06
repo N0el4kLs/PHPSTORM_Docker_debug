@@ -1,11 +1,7 @@
 version: '3.2'
 services:
   web:
-  # https://github.com/JetBrains/phpstorm-docker-images
-      # image: phpstorm/php-80-apache-xdebug-30
-      # image: phpstorm/php-74-apache-xdebug-29
-      # image: phpstorm/php-71-apache-xdebug-26
-      image: phpstorm/php-56-apache-xdebug-25
+      build: ./source
       environment:
         - XDEBUG_CONFIG="remote_handler=dbgp remote_host=host.docker.internal idekey=PHPSTORM"
       ports:
